@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sabico/routes/app_routes.dart';
 import 'package:sabico/screens/evaluation_child_page.dart';
 import 'package:sabico/screens/form_laporan.dart';
 import 'package:sabico/screens/read_penggunaan_gadget.dart';
@@ -46,7 +47,12 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 24.0),
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  bottom: 24.0,
+                  left: 16,
+                  right: 16,
+                ),
                 child: Center(
                   child: Image.asset(
                     "assets/images/logo_sabico.png",
@@ -64,7 +70,6 @@ class _HomePageState extends State<HomePage> {
                       child: InkWell(
                         onTap: () => Get.to(read_penggunaan_gadget()),
                         child: Container(
-                            margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               color: Color(0xFFAEDBF8),
@@ -104,7 +109,6 @@ class _HomePageState extends State<HomePage> {
                       child: InkWell(
                         onTap: () => Get.to(form_laporan()),
                         child: Container(
-                            margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               color: Color(0xFFF8C7AE),
@@ -139,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                   vertical: 8,
                 ),
                 child: InkWell(
-                  onTap: () => Get.to(ruang_admin_page()),
+                  onTap: () => Get.toNamed(Routes.adminPageRoute),
                   child: Container(
                       padding: EdgeInsets.all(8.0),
                       decoration: BoxDecoration(

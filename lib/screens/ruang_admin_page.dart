@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sabico/routes/app_routes.dart';
 import 'package:sabico/screens/evaluation_child_page.dart';
 import 'package:sabico/screens/laporan_list_page.dart';
 import 'package:sabico/screens/read_penggunaan_gadget.dart';
 import 'package:sabico/screens/read_tips_solusi.dart';
+import 'package:sabico/services/auth_service.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
+import 'package:sabico/widgets/TampilanDialog.dart';
 import 'package:sabico/widgets/task_column.dart';
 import 'package:sabico/widgets/top_container.dart';
 
@@ -24,6 +27,8 @@ class ruang_admin_page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Get.find<AuthService>();
+
     return Scaffold(
       backgroundColor: LightColors.kLightYellow,
       appBar: AppBar(
@@ -52,38 +57,45 @@ class ruang_admin_page extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 10.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            // mainAxisAlignment:
-                            //     MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              subheading('Laporan'),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               CalendarPage()),
-                              //     );
-                              //   },
-                              //   child: calendarIcon(),
-                              // ),
-                            ],
-                          ),
+                          subheading('Laporan'),
                           SizedBox(height: 15.0),
-                          InkWell(
-                            onTap: () => Get.to(laporan_list_page()),
-                            child: TaskColumn(
-                              icon: Icons.edit,
-                              iconBackgroundColor: LightColors.kRed,
-                              title: 'Daftar Laporan',
-                              subtitle: 'Laporan yang masuk',
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: InkWell(
+                              onTap: () => Get.to(laporan_list_page()),
+                              child: TaskColumn(
+                                icon: Icons.edit,
+                                iconBackgroundColor: LightColors.kRed,
+                                title: 'Daftar Laporan',
+                                subtitle: 'Laporan yang masuk',
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            height: 15.0,
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 40, bottom: 16.0),
+                            child: subheading('Akun'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: InkWell(
+                              onTap: () =>
+                                  TampilanDialog.showDialogKonfirm("Logout?")
+                                      .then((value) {
+                                if (value) {
+                                  authService.logout().then((value) =>
+                                      Get.offAllNamed(Routes.homeRoute));
+                                }
+                              }),
+                              child: TaskColumn(
+                                icon: Icons.key,
+                                iconBackgroundColor: LightColors.kDarkYellow,
+                                title: 'Logout',
+                                subtitle: 'Keluar Aplikasi',
+                              ),
+                            ),
                           ),
                         ],
                       ),

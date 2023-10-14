@@ -1,16 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sabico/screens/home_page.dart';
+import 'package:sabico/services/auth_service.dart';
 import 'package:sabico/theme/colors/Warna.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
 import 'package:sabico/routes/app_pages.dart';
 import 'package:sabico/injection_container.dart' as di;
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp();
+  }
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) async {
@@ -20,6 +25,8 @@ void main() {
           LightColors.kLightYellow, // navigation bar color
       statusBarColor: Warna.warnaUtama, // status bar color
     ));
+    await Get.putAsync(() => AuthService().init());
+
     return runApp(MyApp());
   });
 }

@@ -6,6 +6,8 @@ abstract class Routes {
   static const formEvaluationRoute = Paths.formEvaluationPath;
   static const reportEvaluationRoute = Paths.reportEvaluationPath;
   static const evaluationHistoryRoute = Paths.evaluationHistoryath;
+  static const adminPageRoute = Paths.adminPagePath;
+  static const authLoginRoute = Paths.authLoginPath;
 }
 
 abstract class Paths {
@@ -16,4 +18,6 @@ abstract class Paths {
   static const formEvaluationPath = "/formEvaluation";
   static const reportEvaluationPath = "/reportEvaluation";
   static const evaluationHistoryath = "/evaluationHistory";
+  static const adminPagePath = "/adminPage";
+  static const authLoginPath = "/authLogin";
 }
