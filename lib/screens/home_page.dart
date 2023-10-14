@@ -1,29 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_randomcolor/flutter_randomcolor.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:sabico/architectures/domain/entities/FamilyMember.dart';
-import 'package:sabico/bloc/family_member_detail/family_member_detail_bloc.dart';
-import 'package:sabico/bloc/family_member_list/bloc.dart';
-import 'package:sabico/bloc/family_member_list/family_member_list_bloc.dart';
-import 'package:sabico/bloc/family_member_list/family_member_list_bloc_event.dart';
-import 'package:sabico/helpers/colors/HexColor.dart';
-import 'package:sabico/routes/app_routes.dart';
-import 'package:sabico/screens/calendar_page.dart';
 import 'package:sabico/screens/evaluation_child_page.dart';
-import 'package:sabico/screens/form_child.dart';
+import 'package:sabico/screens/form_laporan.dart';
 import 'package:sabico/screens/read_penggunaan_gadget.dart';
 import 'package:sabico/screens/read_tips_solusi.dart';
-import 'package:sabico/theme/colors/Warna.dart';
+import 'package:sabico/screens/ruang_guru_page.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:sabico/widgets/TampilanDialog.dart';
-import 'package:sabico/widgets/child_card.dart';
-import 'package:sabico/widgets/task_column.dart';
-import 'package:sabico/widgets/active_project_card.dart';
-import 'package:sabico/widgets/top_container.dart';
-import 'package:sabico/injection_container.dart' as di;
 
 class HomePage extends StatefulWidget {
   static CircleAvatar calendarIcon() {
@@ -97,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                                         "assets/images/online_tech.png")),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 16.0),
-                                  child: Text("Penggunaan Gadget",
+                                  child: Text("Edukasi",
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 18,
@@ -121,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () => Get.to(read_tips_solusi()),
+                        onTap: () => Get.to(form_laporan()),
                         child: Container(
                             margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.all(8.0),
@@ -137,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                                         "assets/images/book_lover.png")),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 16.0),
-                                  child: Text("Solusi & Tips",
+                                  child: Text("Form Laporan",
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 18,
@@ -158,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                   vertical: 8,
                 ),
                 child: InkWell(
-                  onTap: () => Get.to(evaluation_child_page()),
+                  onTap: () => Get.to(ruang_guru_page()),
                   child: Container(
                       padding: EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
@@ -173,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                                   "assets/images/thinking_face.png")),
                           Padding(
                             padding: const EdgeInsets.only(right: 16.0),
-                            child: Text("Lembar Evaluasi",
+                            child: Text("Admin SABICO",
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 18,
