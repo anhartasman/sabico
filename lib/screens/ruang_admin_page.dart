@@ -8,8 +8,8 @@ import 'package:sabico/theme/colors/light_colors.dart';
 import 'package:sabico/widgets/task_column.dart';
 import 'package:sabico/widgets/top_container.dart';
 
-class ruang_guru_page extends StatelessWidget {
-  const ruang_guru_page({super.key});
+class ruang_admin_page extends StatelessWidget {
+  const ruang_admin_page({super.key});
 
   Text subheading(String title) {
     return Text(

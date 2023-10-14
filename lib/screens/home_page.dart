@@ -4,7 +4,7 @@ import 'package:sabico/screens/evaluation_child_page.dart';
 import 'package:sabico/screens/form_laporan.dart';
 import 'package:sabico/screens/read_penggunaan_gadget.dart';
 import 'package:sabico/screens/read_tips_solusi.dart';
-import 'package:sabico/screens/ruang_guru_page.dart';
+import 'package:sabico/screens/ruang_admin_page.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,7 +50,6 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                   child: Image.asset(
                     "assets/images/logo_sabico.png",
-                    height: 100,
                   ),
                 ),
               ),
@@ -140,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                   vertical: 8,
                 ),
                 child: InkWell(
-                  onTap: () => Get.to(ruang_guru_page()),
+                  onTap: () => Get.to(ruang_admin_page()),
                   child: Container(
                       padding: EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
