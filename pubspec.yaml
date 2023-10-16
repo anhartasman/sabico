@@ -67,6 +67,7 @@ dependencies:
   firebase_crashlytics: ^3.0.11
   firebase_messaging: ^14.2.1 
   firebase_storage: ^11.0.10
+  cloud_firestore: ^4.8.0 
 
 flutter_icons:
   android: "launcher_icon"

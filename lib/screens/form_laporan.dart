@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:sabico/architectures/domain/entities/FamilyEvaluation.dart';
+import 'package:sabico/architectures/domain/entities/UserReport.dart';
 import 'package:sabico/bloc/family_evaluation_save/bloc.dart';
 import 'package:sabico/enums/enum_pertanyaan_evaluasi.dart';
 import 'package:sabico/helpers/extensions/ext_string.dart';
@@ -29,31 +30,25 @@ class _form_laporanState extends State<form_laporan> {
   TextEditingController _etPhone = new TextEditingController();
   TextEditingController _etClassName = new TextEditingController();
   TextEditingController _etReport = new TextEditingController();
-  bool fileBeda = false;
-  DateTime? selectedDate;
-  late DateTime today;
-  late DateTime firstDate;
-  late DateTime lastDate;
-  List<int> jawabanList = [];
+
   void saveForm() async {
-    if (selectedDate == null) {
-      TampilanDialog.showDialogAlert("Pilih tanggal terlebih dahulu");
-      return;
-    }
     if (!formKey.currentState!.saveAndValidate()) {
       TampilanDialog.showDialogAlert("Lengkapi form terlebih dahulu");
       return;
     }
+    final theReport = UserReport(
+      id: "",
+      dateTime: DateTime.now(),
+      name: _etName.text,
+      email: _etEmail.text,
+      phone: _etPhone.text,
+      className: _etClassName.text,
+      report: _etReport.text,
+    );
   }
 
   @override
   void initState() {
-    today = DateTime.now();
-    firstDate = today.subtract(Duration(days: 60));
-    lastDate = today;
-    for (var element in PertanyaanEvaluasi.values) {
-      jawabanList.add(-1);
-    }
     super.initState();
   }
 
