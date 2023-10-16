@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sabico/bloc/user_report_list_bloc/bloc.dart';
+import 'package:sabico/injection_container.dart' as di;
 import 'package:sabico/screens/detail_laporan.dart';
-import 'package:sabico/screens/evaluation_child_page.dart';
-import 'package:sabico/screens/read_penggunaan_gadget.dart';
-import 'package:sabico/screens/read_tips_solusi.dart';
+import 'package:sabico/theme/colors/Warna.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
+import 'package:sabico/widgets/TampilanDialog.dart';
 import 'package:sabico/widgets/report_item.dart';
-import 'package:sabico/widgets/task_column.dart';
-import 'package:sabico/widgets/top_container.dart';
 
 class laporan_list_page extends StatelessWidget {
   const laporan_list_page({super.key});
@@ -41,49 +42,40 @@ class laporan_list_page extends StatelessWidget {
         elevation: 0.00,
         backgroundColor: Color(0xFF072541),
       ), //A
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      child: Column(
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () => Get.to(detail_laporan()),
-                            child: report_item(
-                              name: 'Udin Senja',
-                              email: 'udinaja@yahoo.com',
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: report_item(
-                              name: 'Udin',
-                              email: 'udinaja@yahoo.com',
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: report_item(
-                              name: 'Udin',
-                              email: 'udinaja@yahoo.com',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      body: BlocProvider<UserReportListBloc>(
+        create: (BuildContext context) =>
+            di.sl<UserReportListBloc>()..add(UserReportListBlocRetrieve()),
+        child: SafeArea(
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: BlocConsumer<UserReportListBloc, UserReportListBlocState>(
+                listener: (context, state) {
+              if (state is UserReportListBlocStateOnError) {
+                TampilanDialog.showDialogAlert(state.errorMessage);
+              }
+            }, builder: (BuildContext context, state) {
+              if (state is UserReportListBlocStateOnStarted) {
+                return Center(
+                  child: SpinKitWave(
+                    color: Warna.warnaUtama,
+                    size: 50.0,
+                  ),
+                );
+              }
+              return ListView.builder(
+                itemCount: state.reportList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final theReport = state.reportList[index];
+                  return InkWell(
+                    onTap: () => Get.to(detail_laporan(theReport)),
+                    child: report_item(theReport),
+                  );
+                },
+              );
+            }),
           ),
-        ],
+        ),
       ),
     );
   }

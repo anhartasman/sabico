@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sabico/architectures/domain/entities/UserReport.dart';
+import 'package:sabico/helpers/extensions/ext_string.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
 
 class report_item extends StatelessWidget {
-  final String name;
-  final String email;
-  report_item({
-    required this.name,
-    required this.email,
-  });
+  final UserReport theReport;
+  report_item(this.theReport);
   @override
   Widget build(BuildContext context) {
     final textColor = Color(0xFF445D48);
@@ -17,7 +15,7 @@ class report_item extends StatelessWidget {
         color: Color(0xFFD6CC99),
         child: ListTile(
           title: Text(
-            name,
+            theReport.name,
             style: TextStyle(
               color: textColor,
             ),
@@ -26,14 +24,14 @@ class report_item extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "udinaja@yahoo.com",
+                theReport.email,
                 style: TextStyle(
                   color: textColor,
                   fontSize: 13,
                 ),
               ),
               Text(
-                "08 Okt 2023",
+                theReport.dateTime.toTanggal("dd MMM yyyy"),
                 style: TextStyle(
                   color: textColor,
                   fontSize: 12,

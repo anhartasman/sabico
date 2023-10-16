@@ -14,14 +14,15 @@ class ReportRemoteDataSource {
       final theData = element.data();
       debugPrint("Parsing: " + jsonEncode(theData));
 
+      String report = theData["report"];
       reportList.add(UserReport(
-        id: theData["id"],
+        id: element.id,
         dateTime: DateTime.parse(theData["dateTime"]),
         name: theData["name"],
         email: theData["email"],
         phone: theData["phone"],
         className: theData["className"],
-        report: theData["report"],
+        report: report.replaceAll("\\n", "\n"),
       ));
     });
 
