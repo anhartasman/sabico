@@ -7,16 +7,16 @@ class SaveReportBloc extends Bloc<SaveReportBlocEvent, SaveReportBlocState> {
   final SaveReportUseCase saveReportUseCase;
   SaveReportBloc({
     required this.saveReportUseCase,
-  }) : super(SaveReportOnIdle()) {
+  }) : super(SaveReportBlocStateOnIdle()) {
     on<SaveReportBlocEvent>((event, emit) async {
       if (event is SaveReportBlocStart) {
         try {
-          emit(SaveReportOnStarted());
+          emit(SaveReportBlocStateOnStarted());
 
           final failureOrTrivia = await saveReportUseCase(event.theReport);
 
           await failureOrTrivia.first;
-          emit(SaveReportOnSuccess());
+          emit(SaveReportBlocStateOnSuccess());
         } catch (e) {
           final theErrorMessage = e.toString();
           String labelError = "terjadi kesalahan, silahkan coba lagi";
@@ -25,7 +25,7 @@ class SaveReportBloc extends Bloc<SaveReportBlocEvent, SaveReportBlocState> {
           } else if (theErrorMessage.contains("wrong")) {
             labelError = "Password salah";
           }
-          emit(SaveReportOnError(
+          emit(SaveReportBlocStateOnError(
             errorMessage: labelError,
           ));
         }

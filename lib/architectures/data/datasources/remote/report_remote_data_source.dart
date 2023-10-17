@@ -36,6 +36,6 @@ class ReportRemoteDataSource {
     reportMap["dateTime"] = theReport.dateTime.toTanggal("yyyy-mm-dd");
 
     DocumentReference ref =
-        await databaseReference.collection('report').add(theReport.toMap());
+        await databaseReference.collection('report').add(reportMap);
   }
 }

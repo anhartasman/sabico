@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () => Get.to(form_laporan()),
+                        onTap: () => Get.toNamed(Routes.formReportRoute),
                         child: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(

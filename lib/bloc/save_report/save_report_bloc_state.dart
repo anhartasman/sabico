@@ -7,15 +7,15 @@ abstract class SaveReportBlocState extends Equatable {
   List<Object> get props => [];
 }
 
-class SaveReportOnIdle extends SaveReportBlocState {}
+class SaveReportBlocStateOnIdle extends SaveReportBlocState {}
 
-class SaveReportOnStarted extends SaveReportBlocState {}
+class SaveReportBlocStateOnStarted extends SaveReportBlocState {}
 
-class SaveReportOnSuccess extends SaveReportBlocState {}
+class SaveReportBlocStateOnSuccess extends SaveReportBlocState {}
 
-class SaveReportOnError extends SaveReportBlocState {
+class SaveReportBlocStateOnError extends SaveReportBlocState {
   final String errorMessage;
-  SaveReportOnError({
+  SaveReportBlocStateOnError({
     required this.errorMessage,
   });
 }
