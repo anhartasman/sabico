@@ -7,12 +7,14 @@ import 'package:sabico/architectures/domain/usecases/FamilyEvaluationHistoryUseC
 import 'package:sabico/architectures/domain/usecases/FamilyEvaluationSaveUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/FamilyMemberDetailUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/FamilyMemberSaveUseCase.dart';
+import 'package:sabico/architectures/domain/usecases/SaveReportUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/UserLoginUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/UserReportListUseCase.dart';
 import 'package:sabico/bloc/family_evaluation_history/family_evaluation_history_bloc.dart';
 import 'package:sabico/bloc/family_evaluation_save/family_evaluation_save_bloc.dart';
 import 'package:sabico/bloc/family_member_detail/family_member_detail_bloc.dart';
 import 'package:sabico/bloc/family_member_save/family_member_save_bloc.dart';
+import 'package:sabico/bloc/save_report/save_report_bloc.dart';
 import 'package:sabico/bloc/user_login/user_login_bloc.dart';
 import 'package:sabico/bloc/user_report_list_bloc/bloc.dart';
 
@@ -26,6 +28,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => FamilyEvaluationSaveUseCase(sl()));
   sl.registerLazySingleton(() => FamilyEvaluationHistoryUseCase(sl()));
   sl.registerLazySingleton(() => UserLoginUseCase(sl()));
+  sl.registerLazySingleton(() => SaveReportUseCase(sl()));
   // Repository
   sl.registerLazySingleton<AuthRepository>(
     () => DataAuthRepository(),
@@ -44,8 +47,8 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(
-    () => FamilyMemberSaveBloc(
-      familyMemberSaveUseCase: sl(),
+    () => SaveReportBloc(
+      saveReportUseCase: sl(),
     ),
   );
   sl.registerFactory(

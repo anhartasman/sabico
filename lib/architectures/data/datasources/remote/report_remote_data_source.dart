@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
+import 'package:sabico/helpers/extensions/ext_string.dart';
 
 class ReportRemoteDataSource {
   static Future<List<UserReport>> reportList() async {
@@ -27,5 +28,14 @@ class ReportRemoteDataSource {
     });
 
     return reportList;
+  }
+
+  static Future<void> saveReport(UserReport theReport) async {
+    final databaseReference = FirebaseFirestore.instance;
+    Map<String, dynamic> reportMap = theReport.toMap();
+    reportMap["dateTime"] = theReport.dateTime.toTanggal("yyyy-mm-dd");
+
+    DocumentReference ref =
+        await databaseReference.collection('report').add(theReport.toMap());
   }
 }

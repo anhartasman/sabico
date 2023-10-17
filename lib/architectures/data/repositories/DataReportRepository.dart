@@ -15,4 +15,9 @@ class DataReportRepository implements ReportRepository {
     final reportList = await ReportRemoteDataSource.reportList();
     return reportList;
   }
+
+  @override
+  Future<void> saveReport(UserReport theReport) async {
+    await ReportRemoteDataSource.saveReport(theReport);
+  }
 }
