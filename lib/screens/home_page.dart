@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sabico/routes/app_routes.dart';
 import 'package:sabico/screens/evaluation_child_page.dart';
 import 'package:sabico/screens/form_laporan.dart';
+import 'package:sabico/screens/read_edukasi_bullying.dart';
 import 'package:sabico/screens/read_penggunaan_gadget.dart';
 import 'package:sabico/screens/read_tips_solusi.dart';
 import 'package:sabico/screens/ruang_admin_page.dart';
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () => Get.to(read_penggunaan_gadget()),
+                        onTap: () => Get.to(read_edukasi_bullying()),
                         child: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(

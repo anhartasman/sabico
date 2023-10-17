@@ -7,6 +7,7 @@ import 'package:sabico/widgets/calendar_dates.dart';
 import 'package:sabico/widgets/task_container.dart';
 import 'package:sabico/screens/create_new_task_page.dart';
 import 'package:sabico/widgets/back_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class detail_laporan extends StatelessWidget {
   final UserReport theReport;
@@ -79,12 +80,11 @@ class detail_laporan extends StatelessWidget {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateNewTaskPage(),
-                            ),
+                          final Uri telLaunchUri = Uri(
+                            scheme: 'tel',
+                            path: theReport.phone,
                           );
+                          launchUrl(telLaunchUri);
                         },
                         child: Center(
                           child: Icon(
