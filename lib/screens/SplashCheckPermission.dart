@@ -116,58 +116,56 @@ class _SplashCheckPermissionState extends State<SplashCheckPermission> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: SplashContent(),
+          ),
+          SizedBox(height: 16),
+          if (gagalPermission)
             Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: SplashContent(),
-            ),
-            SizedBox(height: 16),
-            if (gagalPermission)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Izin Aplikasi",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Izin Aplikasi",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      "Beberapa fitur membutuhkan izin penggunaan",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Beberapa fitur membutuhkan izin penggunaan",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                            child: InkWell(
-                                onTap: checkUserPermission,
-                                child: ButtonPutih("Ulangi"))),
-                        SizedBox(width: 20),
-                        Expanded(
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
                           child: InkWell(
-                              onTap: () => openAppSettings(),
-                              child: ButtonMain("Pengaturan")),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                  ],
-                ),
+                              onTap: checkUserPermission,
+                              child: ButtonPutih("Ulangi"))),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: InkWell(
+                            onTap: () => openAppSettings(),
+                            child: ButtonMain("Pengaturan")),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                ],
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

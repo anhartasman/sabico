@@ -32,17 +32,7 @@ class _splash_screenState extends State<splash_screen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: SplashContent(),
-            ),
-          ],
-        ),
-      ),
+      body: SplashContent(),
     );
   }
 }

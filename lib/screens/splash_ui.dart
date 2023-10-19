@@ -8,7 +8,7 @@ class SplashUI extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: Center(
         child: SplashContent(),
       ),
     );

@@ -171,6 +171,10 @@ class _HomePageState extends State<HomePage> {
                       )),
                 ),
               ),
+              Image.asset(
+                "assets/images/sicerka.png",
+                height: 250,
+              ),
             ],
           ),
         ),
