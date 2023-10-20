@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
 import 'package:sabico/helpers/extensions/ext_string.dart';
@@ -19,6 +20,7 @@ class ReportRemoteDataSource {
       reportList.add(UserReport(
         id: element.id,
         dateTime: DateTime.parse(theData["dateTime"]),
+        userId: theData["userId"],
         name: theData["name"],
         email: theData["email"],
         phone: theData["phone"],
@@ -32,8 +34,11 @@ class ReportRemoteDataSource {
 
   static Future<void> saveReport(UserReport theReport) async {
     final databaseReference = FirebaseFirestore.instance;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
     Map<String, dynamic> reportMap = theReport.toMap();
     reportMap["dateTime"] = theReport.dateTime.toTanggal("yyyy-mm-dd");
+    reportMap["userId"] = _auth.currentUser!.uid;
 
     DocumentReference ref =
         await databaseReference.collection('report').add(reportMap);

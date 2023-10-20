@@ -6,7 +6,9 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:sabico/architectures/domain/entities/UserAccount.dart';
 import 'package:sabico/architectures/domain/entities/UserAuth.dart';
+import 'package:sabico/architectures/domain/entities/UserNewAccount.dart';
 import 'package:sabico/bloc/user_login/bloc.dart';
+import 'package:sabico/bloc/user_register/bloc.dart';
 import 'package:sabico/routes/app_routes.dart';
 import 'package:sabico/services/auth_service.dart';
 import 'package:sabico/theme/colors/Warna.dart';
@@ -14,16 +16,19 @@ import 'package:sabico/theme/decorations/box_decoration.dart';
 import 'package:sabico/theme/decorations/input_decoration.dart';
 import 'package:sabico/widgets/TampilanDialog.dart';
 
-class login_admin extends StatefulWidget {
-  const login_admin();
+class form_register extends StatefulWidget {
+  const form_register();
   @override
-  State<login_admin> createState() => _login_adminState();
+  State<form_register> createState() => _form_registerState();
 }
 
-class _login_adminState extends State<login_admin> {
+class _form_registerState extends State<form_register> {
   final formKey = GlobalKey<FormBuilderState>();
+  TextEditingController _etName = new TextEditingController();
+  TextEditingController _etPhone = new TextEditingController();
   TextEditingController _etEmail = new TextEditingController();
   TextEditingController _etPassword = new TextEditingController();
+  TextEditingController _etPasswordConfirm = new TextEditingController();
 
   void submitForm() {
     try {
@@ -31,14 +36,21 @@ class _login_adminState extends State<login_admin> {
         throw ("Lengkapi form");
       }
       final passwordFirst = _etPassword.text;
+      final passwordConfirm = _etPasswordConfirm.text;
       if (passwordFirst.length < 6) {
         throw ("Minimal password 6 karakter");
       }
-      final userAuth = UserAuth(
+      if (passwordFirst != passwordConfirm) {
+        throw ("Password tidak sama");
+      }
+      final userNewAccount = UserNewAccount(
+        name: _etName.text,
+        phone: _etPhone.text,
         email: _etEmail.text,
         password: _etPassword.text,
       );
-      BlocProvider.of<UserLoginBloc>(context).add(UserLoginBlocStart(userAuth));
+      BlocProvider.of<UserRegisterBloc>(context)
+          .add(UserRegisterBlocStart(userNewAccount));
     } catch (e) {
       TampilanDialog.showDialogAlert(e.toString());
     }
@@ -56,7 +68,7 @@ class _login_adminState extends State<login_admin> {
     return Scaffold(
       backgroundColor: Color(0xFFF5E8B7),
       appBar: AppBar(
-        title: const Text("Login User"),
+        title: const Text("Register User"),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -72,22 +84,16 @@ class _login_adminState extends State<login_admin> {
       body: SafeArea(
         child: FormBuilder(
           key: formKey,
-          child: BlocConsumer<UserLoginBloc, UserLoginBlocState>(
+          child: BlocConsumer<UserRegisterBloc, UserRegisterBlocState>(
               listener: (context, state) {
-            if (state is UserLoginOnSuccess) {
-              final authService = Get.find<AuthService>();
-              authService.setIsLoggedIn(
-                true,
-                newUser: state.theAccount,
-              );
-              // TampilanDialog.showDialogSuccess("Login berhasil");
+            if (state is UserRegisterOnSuccess) {
               Future.delayed(Duration(milliseconds: 500))
                   .then((value) => Get.offNamed(Routes.homeRoute));
-            } else if (state is UserLoginOnError) {
+            } else if (state is UserRegisterOnError) {
               TampilanDialog.showDialogAlert(state.errorMessage);
             }
           }, builder: (context, state) {
-            if (state is UserLoginOnStarted) {
+            if (state is UserRegisterOnStarted) {
               return Center(
                 child: SpinKitWave(
                   color: Warna.warnaUtama,
@@ -103,6 +109,70 @@ class _login_adminState extends State<login_admin> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 25.0,
+                            left: 16,
+                          ),
+                          child: Text("Name",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            decoration: box_field_abu.copyWith(
+                              color: Color(0xFFC1D8C3),
+                            ),
+                            child: new FormBuilderTextField(
+                              name: "name",
+                              controller: _etName,
+                              decoration: text_field_abu,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              keyboardType: TextInputType.name,
+                              style: new TextStyle(
+                                fontFamily: "Poppins",
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 25.0,
+                            left: 16,
+                          ),
+                          child: Text("Phone",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            decoration: box_field_abu.copyWith(
+                              color: Color(0xFFC1D8C3),
+                            ),
+                            child: new FormBuilderTextField(
+                              name: "phone",
+                              controller: _etPhone,
+                              decoration: text_field_abu,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              keyboardType: TextInputType.phone,
+                              style: new TextStyle(
+                                fontFamily: "Poppins",
+                              ),
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                             top: 25.0,
@@ -168,6 +238,39 @@ class _login_adminState extends State<login_admin> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 25.0,
+                            left: 16,
+                          ),
+                          child: Text("Confirm Password",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            decoration: box_field_abu.copyWith(
+                              color: Color(0xFFC1D8C3),
+                            ),
+                            child: new FormBuilderTextField(
+                              name: "passwordConfirm",
+                              controller: _etPasswordConfirm,
+                              decoration: text_field_abu,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              obscureText: true,
+                              keyboardType: TextInputType.visiblePassword,
+                              style: new TextStyle(
+                                fontFamily: "Poppins",
+                              ),
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 40,
                         ),
@@ -184,7 +287,7 @@ class _login_adminState extends State<login_admin> {
                           onTap: submitForm,
                           child: Container(
                             child: Text(
-                              'Login',
+                              'Register',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -204,22 +307,6 @@ class _login_adminState extends State<login_admin> {
                   ),
                   SizedBox(
                     height: 40,
-                  ),
-                  InkWell(
-                    onTap: () => Get.toNamed(Routes.authRegisterRoute),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("Tidak memiliki akun ? "),
-                        Text(
-                          "Daftar disini",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               ),

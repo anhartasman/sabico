@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:sabico/architectures/domain/entities/UserAccount.dart';
 import 'package:sabico/architectures/domain/entities/UserAuth.dart';
+import 'package:sabico/architectures/domain/entities/UserNewAccount.dart';
 import 'package:sabico/architectures/domain/entities/UserProfile.dart';
 import 'package:sabico/architectures/domain/repositories/AuthRepository.dart';
 
@@ -43,5 +45,28 @@ class DataAuthRepository implements AuthRepository {
         nama: user.displayName ?? "",
       ),
     );
+  }
+
+  Future<void> register(UserNewAccount newAccount) async {
+    _logger.info(
+        "register email ${newAccount.email} password ${newAccount.password}");
+
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final databaseReference = FirebaseFirestore.instance;
+    await _auth.signOut();
+    final credential = await _auth.createUserWithEmailAndPassword(
+        email: newAccount.email, password: newAccount.password);
+    await credential.user!.updateDisplayName(newAccount.name);
+    Map<String, dynamic> userMap = {
+      "userId": _auth.currentUser!.uid,
+      "userName": newAccount.name,
+      "userEmail": newAccount.email,
+      "userPhone": newAccount.phone,
+    };
+
+    await databaseReference
+        .collection('userInfo')
+        .doc(_auth.currentUser!.uid)
+        .set(userMap);
   }
 }

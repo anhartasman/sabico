@@ -32,7 +32,7 @@ class ruang_admin_page extends StatelessWidget {
     return Scaffold(
       backgroundColor: LightColors.kLightYellow,
       appBar: AppBar(
-        title: const Text("Admin SABICO"),
+        title: const Text("User SABICO"),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,

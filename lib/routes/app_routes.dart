@@ -8,6 +8,7 @@ abstract class Routes {
   static const evaluationHistoryRoute = Paths.evaluationHistoryath;
   static const adminPageRoute = Paths.adminPagePath;
   static const authLoginRoute = Paths.authLoginPath;
+  static const authRegisterRoute = Paths.authRegisterPath;
   static const formReportRoute = Paths.formReportPath;
 }
 
@@ -21,5 +22,6 @@ abstract class Paths {
   static const evaluationHistoryath = "/evaluationHistory";
   static const adminPagePath = "/adminPage";
   static const authLoginPath = "/authLogin";
+  static const authRegisterPath = "/authRegister";
   static const formReportPath = "/formReport";
 }

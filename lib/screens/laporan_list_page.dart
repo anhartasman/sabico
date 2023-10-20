@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:sabico/bloc/user_report_list_bloc/bloc.dart';
+import 'package:sabico/bloc/user_report_list/bloc.dart';
 import 'package:sabico/injection_container.dart' as di;
 import 'package:sabico/screens/detail_laporan.dart';
 import 'package:sabico/theme/colors/Warna.dart';

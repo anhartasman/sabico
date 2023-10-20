@@ -24,7 +24,7 @@ class report_item extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                theReport.email,
+                "Kelas " + theReport.className,
                 style: TextStyle(
                   color: textColor,
                   fontSize: 13,

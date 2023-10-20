@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
+import 'package:sabico/bloc/member_info/bloc.dart';
 import 'package:sabico/dates_list.dart';
+import 'package:sabico/helpers/extensions/ext_string.dart';
+import 'package:sabico/theme/colors/Warna.dart';
 import 'package:sabico/theme/colors/light_colors.dart';
-import 'package:sabico/widgets/ReportContainer.dart';
 import 'package:sabico/widgets/calendar_dates.dart';
 import 'package:sabico/widgets/task_container.dart';
 import 'package:sabico/screens/create_new_task_page.dart';
 import 'package:sabico/widgets/back_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sabico/injection_container.dart' as di;
 
 class detail_laporan extends StatelessWidget {
   final UserReport theReport;
@@ -28,7 +33,7 @@ class detail_laporan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightColors.kLightYellow,
+      backgroundColor: Color(0xFFD6CC99),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
@@ -41,84 +46,274 @@ class detail_laporan extends StatelessWidget {
             children: <Widget>[
               MyBackButton(),
               SizedBox(height: 30.0),
-              Text(
-                theReport.name,
-                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
+              _StudentInfo(
+                name: theReport.name,
+                className: theReport.className,
+                phoneNumber: theReport.phone,
               ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    theReport.email,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+              _ReporterInfo(
+                memberId: theReport.userId,
               ),
-              SizedBox(height: 10),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      theReport.phone,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      height: 40.0,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        color: LightColors.kGreen,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final Uri telLaunchUri = Uri(
-                            scheme: 'tel',
-                            path: theReport.phone,
-                          );
-                          launchUrl(telLaunchUri);
-                        },
-                        child: Center(
-                          child: Icon(
-                            Icons.phone,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Kelas ' + theReport.className,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              ReportContainer(
+              _ReportDetail(
                 dateTime: theReport.dateTime,
                 subtitle: theReport.report,
-                boxColor: LightColors.kLightYellow2,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _StudentInfo extends StatelessWidget {
+  final String name;
+  final String className;
+  final String phoneNumber;
+
+  _StudentInfo({
+    required this.name,
+    required this.className,
+    required this.phoneNumber,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 15.0),
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Info Siswa",
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              "Nama : $name",
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              "Kelas : $className",
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  phoneNumber,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Container(
+                  height: 40.0,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: LightColors.kGreen,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final Uri telLaunchUri = Uri(
+                        scheme: 'tel',
+                        path: phoneNumber,
+                      );
+                      launchUrl(telLaunchUri);
+                    },
+                    child: Center(
+                      child: Icon(
+                        Icons.phone,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+        ],
+      ),
+      decoration: BoxDecoration(
+          color: Color(0xFF001524), borderRadius: BorderRadius.circular(30.0)),
+    );
+  }
+}
+
+class _ReporterInfo extends StatelessWidget {
+  final String memberId;
+
+  _ReporterInfo({
+    required this.memberId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<MemberInfoBloc>(
+      create: (BuildContext context) =>
+          di.sl<MemberInfoBloc>()..add(MemberInfoBlocRetrieve(memberId)),
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 15.0),
+        padding: EdgeInsets.all(20.0),
+        child: BlocConsumer<MemberInfoBloc, MemberInfoBlocState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is MemberInfoBlocStateOnStarted) {
+                return Center(
+                  child: SpinKitWave(
+                    color: Colors.white,
+                    size: 50.0,
+                  ),
+                );
+              }
+              if (state is MemberInfoBlocStateOnSuccess) {
+                final memberInfo = state.memberInfo;
+                final phoneNumber = memberInfo.userPhone;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Info Pelapor",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                        "Nama : ${memberInfo.userName}",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                        "Email : ${memberInfo.userEmail}",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            phoneNumber,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Container(
+                            height: 40.0,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: LightColors.kGreen,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                final Uri telLaunchUri = Uri(
+                                  scheme: 'tel',
+                                  path: phoneNumber,
+                                );
+                                launchUrl(telLaunchUri);
+                              },
+                              child: Center(
+                                child: Icon(
+                                  Icons.phone,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ],
+                );
+              }
+              return Container();
+            }),
+        decoration: BoxDecoration(
+            color: Color(0xFF445D48),
+            borderRadius: BorderRadius.circular(30.0)),
+      ),
+    );
+  }
+}
+
+class _ReportDetail extends StatelessWidget {
+  final String subtitle;
+  final DateTime dateTime;
+
+  _ReportDetail({
+    required this.dateTime,
+    required this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 15.0),
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Isi Laporan",
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            dateTime.toTanggal("dd MMMM yyyy"),
+            style: TextStyle(
+              fontSize: 11.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              subtitle,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black54,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          )
+        ],
+      ),
+      decoration: BoxDecoration(
+          color: Color(0xFFFDE5D4), borderRadius: BorderRadius.circular(30.0)),
     );
   }
 }

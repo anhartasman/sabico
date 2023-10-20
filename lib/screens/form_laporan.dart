@@ -35,6 +35,7 @@ class _form_laporanState extends State<form_laporan> {
         final theReport = UserReport(
           id: "",
           dateTime: DateTime.now(),
+          userId: "",
           name: _etName.text,
           email: _etEmail.text,
           phone: _etPhone.text,
@@ -109,7 +110,7 @@ class _form_laporanState extends State<form_laporan> {
                             top: 25.0,
                             left: 16,
                           ),
-                          child: Text("Nama",
+                          child: Text("Nama Siswa",
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
@@ -128,36 +129,6 @@ class _form_laporanState extends State<form_laporan> {
                                 FormBuilderValidators.required(),
                               ]),
                               keyboardType: TextInputType.text,
-                              style: new TextStyle(
-                                fontFamily: "Poppins",
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 25.0,
-                            left: 16,
-                          ),
-                          child: Text("Email",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            decoration: box_field_abu,
-                            child: new FormBuilderTextField(
-                              name: "email",
-                              controller: _etEmail,
-                              decoration: text_field_abu,
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.email(),
-                              ]),
-                              keyboardType: TextInputType.emailAddress,
                               style: new TextStyle(
                                 fontFamily: "Poppins",
                               ),

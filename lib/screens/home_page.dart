@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                                   "assets/images/thinking_face.png")),
                           Padding(
                             padding: const EdgeInsets.only(right: 16.0),
-                            child: Text("Admin SABICO",
+                            child: Text("User SABICO",
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 18,

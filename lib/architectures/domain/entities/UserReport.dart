@@ -3,6 +3,7 @@ import 'dart:convert';
 
 class UserReport {
   final String id;
+  final String userId;
   final DateTime dateTime;
   final String name;
   final String email;
@@ -11,6 +12,7 @@ class UserReport {
   final String report;
   const UserReport({
     required this.id,
+    required this.userId,
     required this.dateTime,
     required this.name,
     required this.email,
@@ -21,6 +23,7 @@ class UserReport {
 
   UserReport copyWith({
     String? id,
+    String? userId,
     DateTime? dateTime,
     String? name,
     String? email,
@@ -30,6 +33,7 @@ class UserReport {
   }) {
     return UserReport(
       id: id ?? this.id,
+      userId: userId ?? this.userId,
       dateTime: dateTime ?? this.dateTime,
       name: name ?? this.name,
       email: email ?? this.email,
@@ -42,6 +46,7 @@ class UserReport {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'userId': userId,
       'dateTime': dateTime.millisecondsSinceEpoch,
       'name': name,
       'email': email,
@@ -54,6 +59,7 @@ class UserReport {
   factory UserReport.fromMap(Map<String, dynamic> map) {
     return UserReport(
       id: map['id'] as String,
+      userId: map['userId'] as String,
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
       name: map['name'] as String,
       email: map['email'] as String,
@@ -70,7 +76,7 @@ class UserReport {
 
   @override
   String toString() {
-    return 'UserReport(id: $id, dateTime: $dateTime, name: $name, email: $email, phone: $phone, className: $className, report: $report)';
+    return 'UserReport(id: $id, userId: $userId, dateTime: $dateTime, name: $name, email: $email, phone: $phone, className: $className, report: $report)';
   }
 
   @override
@@ -78,6 +84,7 @@ class UserReport {
     if (identical(this, other)) return true;
 
     return other.id == id &&
+        other.userId == userId &&
         other.dateTime == dateTime &&
         other.name == name &&
         other.email == email &&
@@ -89,6 +96,7 @@ class UserReport {
   @override
   int get hashCode {
     return id.hashCode ^
+        userId.hashCode ^
         dateTime.hashCode ^
         name.hashCode ^
         email.hashCode ^

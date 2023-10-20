@@ -8,6 +8,7 @@ import 'package:sabico/bloc/family_evaluation_save/family_evaluation_save_bloc.d
 import 'package:sabico/bloc/family_member_detail/bloc.dart';
 import 'package:sabico/bloc/save_report/save_report_bloc.dart';
 import 'package:sabico/bloc/user_login/user_login_bloc.dart';
+import 'package:sabico/bloc/user_register/user_register_bloc.dart';
 import 'package:sabico/helpers/extensions/ext_string.dart';
 import 'package:sabico/injection_container.dart' as di;
 import 'package:sabico/middlewares/member_guard.dart';
@@ -16,6 +17,7 @@ import 'package:sabico/screens/child_profile.dart';
 import 'package:sabico/screens/evaluation_history.dart';
 import 'package:sabico/screens/form_evaluation.dart';
 import 'package:sabico/screens/form_laporan.dart';
+import 'package:sabico/screens/form_register.dart';
 import 'package:sabico/screens/home_page.dart';
 import 'package:sabico/screens/login_admin.dart';
 import 'package:sabico/screens/report_evaluation.dart';
@@ -37,6 +39,9 @@ final appPages = [
       // ));
       return HomePage();
     },
+    middlewares: [
+      MemberGuard(), // Add the middleware here
+    ],
   ),
   GetPage(
     name: Routes.adminPageRoute,
@@ -52,6 +57,12 @@ final appPages = [
     page: () => BlocProvider<UserLoginBloc>(
         create: (BuildContext context) => di.sl<UserLoginBloc>(),
         child: login_admin()),
+  ),
+  GetPage(
+    name: Routes.authRegisterRoute,
+    page: () => BlocProvider<UserRegisterBloc>(
+        create: (BuildContext context) => di.sl<UserRegisterBloc>(),
+        child: form_register()),
   ),
   GetPage(
     name: Routes.formReportRoute,
