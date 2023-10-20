@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sabico/architectures/domain/entities/ReportFilter.dart';
 import 'package:sabico/bloc/user_report_list/bloc.dart';
 import 'package:sabico/injection_container.dart' as di;
 import 'package:sabico/screens/detail_laporan.dart';
@@ -11,7 +12,8 @@ import 'package:sabico/widgets/TampilanDialog.dart';
 import 'package:sabico/widgets/report_item.dart';
 
 class laporan_list_page extends StatelessWidget {
-  const laporan_list_page({super.key});
+  final String status;
+  const laporan_list_page(this.status, {super.key});
 
   Text subheading(String title) {
     return Text(
@@ -43,8 +45,8 @@ class laporan_list_page extends StatelessWidget {
         backgroundColor: Color(0xFF072541),
       ), //A
       body: BlocProvider<UserReportListBloc>(
-        create: (BuildContext context) =>
-            di.sl<UserReportListBloc>()..add(UserReportListBlocRetrieve()),
+        create: (BuildContext context) => di.sl<UserReportListBloc>()
+          ..add(UserReportListBlocRetrieve(ReportFilter(status: status))),
         child: SafeArea(
           child: Container(
             color: Colors.transparent,

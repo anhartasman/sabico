@@ -6,6 +6,7 @@ class AuthService extends GetxService {
   Future<AuthService> init() async => this;
   bool isLoggedIn = false;
   UserAccount? theUser;
+  bool isAdmin = false;
   void setIsLoggedIn(
     bool newValue, {
     UserAccount? newUser,
@@ -13,6 +14,7 @@ class AuthService extends GetxService {
     isLoggedIn = newValue;
     if (newValue) {
       theUser = newUser;
+      isAdmin = newUser!.email == "admin@sabico.com";
     }
   }
 

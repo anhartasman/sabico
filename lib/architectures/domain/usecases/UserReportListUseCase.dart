@@ -1,21 +1,22 @@
 import 'dart:async';
 
+import 'package:sabico/architectures/domain/entities/ReportFilter.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
 import 'package:sabico/architectures/domain/repositories/ReportRepository.dart';
 import 'package:sabico/architectures/usecase/usecase.dart';
 
-class UserReportListUseCase extends UseCase<List<UserReport>, NoParams> {
+class UserReportListUseCase extends UseCase<List<UserReport>, ReportFilter> {
   UserReportListUseCase(this.repository);
 
   final ReportRepository repository;
 
   @override
   Future<Stream<List<UserReport>>> call(
-    NoParams params,
+    ReportFilter theFilter,
   ) async {
     final StreamController<List<UserReport>> controller = StreamController();
 
-    repository.reportList().then((the_respon) {
+    repository.reportList(theFilter).then((the_respon) {
       controller.add((the_respon));
 
       controller.close();

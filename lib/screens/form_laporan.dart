@@ -36,6 +36,7 @@ class _form_laporanState extends State<form_laporan> {
           id: "",
           dateTime: DateTime.now(),
           userId: "",
+          status: "waiting",
           name: _etName.text,
           email: _etEmail.text,
           phone: _etPhone.text,
@@ -140,7 +141,7 @@ class _form_laporanState extends State<form_laporan> {
                             top: 25.0,
                             left: 16,
                           ),
-                          child: Text("Nomor Telepon",
+                          child: Text("No. Telepon Siswa",
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,

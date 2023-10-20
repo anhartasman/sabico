@@ -14,7 +14,7 @@ class UserReportListBloc
     on<UserReportListBlocEvent>((event, emit) async {
       if (event is UserReportListBlocRetrieve) {
         emit(UserReportListBlocStateOnStarted());
-        final failureOrTrivia = await userReportListUseCase(NoParams());
+        final failureOrTrivia = await userReportListUseCase(event.theFilter);
 
         try {
           var memberList = await failureOrTrivia.first;

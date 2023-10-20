@@ -64,12 +64,36 @@ class ruang_admin_page extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16.0),
                             child: InkWell(
-                              onTap: () => Get.to(laporan_list_page()),
+                              onTap: () => Get.to(laporan_list_page("waiting")),
+                              child: TaskColumn(
+                                icon: Icons.edit,
+                                iconBackgroundColor: LightColors.kDarkYellow,
+                                title: 'Menunggu diproses',
+                                subtitle: 'Laporan yang masuk',
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: InkWell(
+                              onTap: () => Get.to(laporan_list_page("active")),
+                              child: TaskColumn(
+                                icon: Icons.edit,
+                                iconBackgroundColor: LightColors.kGreen,
+                                title: 'Sedang diproses',
+                                subtitle: 'Laporan dalam penanganan',
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: InkWell(
+                              onTap: () => Get.to(laporan_list_page("done")),
                               child: TaskColumn(
                                 icon: Icons.edit,
                                 iconBackgroundColor: LightColors.kRed,
-                                title: 'Daftar Laporan',
-                                subtitle: 'Laporan yang masuk',
+                                title: 'Arsip Laporan',
+                                subtitle: 'Laporan yang sudah ditangani',
                               ),
                             ),
                           ),
@@ -77,6 +101,18 @@ class ruang_admin_page extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(top: 40, bottom: 16.0),
                             child: subheading('Akun'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: InkWell(
+                              onTap: () {},
+                              child: TaskColumn(
+                                icon: Icons.man,
+                                iconBackgroundColor: LightColors.kDarkBlue,
+                                title: authService.theUser!.profil.nama,
+                                subtitle: authService.theUser!.email,
+                              ),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16.0),

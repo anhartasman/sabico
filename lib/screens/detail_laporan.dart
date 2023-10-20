@@ -118,17 +118,19 @@ class _StudentInfo extends StatelessWidget {
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  phoneNumber,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    phoneNumber,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
                 Container(
                   height: 40.0,
-                  width: 120,
                   decoration: BoxDecoration(
                     color: LightColors.kGreen,
                     borderRadius: BorderRadius.circular(30),
@@ -223,17 +225,19 @@ class _ReporterInfo extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            phoneNumber,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              phoneNumber,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                           Container(
                             height: 40.0,
-                            width: 120,
                             decoration: BoxDecoration(
                               color: LightColors.kGreen,
                               borderRadius: BorderRadius.circular(30),

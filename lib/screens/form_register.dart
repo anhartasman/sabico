@@ -43,14 +43,18 @@ class _form_registerState extends State<form_register> {
       if (passwordFirst != passwordConfirm) {
         throw ("Password tidak sama");
       }
-      final userNewAccount = UserNewAccount(
-        name: _etName.text,
-        phone: _etPhone.text,
-        email: _etEmail.text,
-        password: _etPassword.text,
-      );
-      BlocProvider.of<UserRegisterBloc>(context)
-          .add(UserRegisterBlocStart(userNewAccount));
+      TampilanDialog.showDialogKonfirm("Teruskan pendaftaran?").then((value) {
+        if (value) {
+          final userNewAccount = UserNewAccount(
+            name: _etName.text,
+            phone: _etPhone.text,
+            email: _etEmail.text,
+            password: _etPassword.text,
+          );
+          BlocProvider.of<UserRegisterBloc>(context)
+              .add(UserRegisterBlocStart(userNewAccount));
+        }
+      });
     } catch (e) {
       TampilanDialog.showDialogAlert(e.toString());
     }

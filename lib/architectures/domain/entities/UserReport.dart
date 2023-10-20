@@ -10,6 +10,7 @@ class UserReport {
   final String phone;
   final String className;
   final String report;
+  final String status;
   const UserReport({
     required this.id,
     required this.userId,
@@ -19,6 +20,7 @@ class UserReport {
     required this.phone,
     required this.className,
     required this.report,
+    required this.status,
   });
 
   UserReport copyWith({
@@ -30,6 +32,7 @@ class UserReport {
     String? phone,
     String? className,
     String? report,
+    String? status,
   }) {
     return UserReport(
       id: id ?? this.id,
@@ -40,6 +43,7 @@ class UserReport {
       phone: phone ?? this.phone,
       className: className ?? this.className,
       report: report ?? this.report,
+      status: status ?? this.status,
     );
   }
 
@@ -53,6 +57,7 @@ class UserReport {
       'phone': phone,
       'className': className,
       'report': report,
+      'status': status,
     };
   }
 
@@ -66,6 +71,7 @@ class UserReport {
       phone: map['phone'] as String,
       className: map['className'] as String,
       report: map['report'] as String,
+      status: map['status'] as String,
     );
   }
 
@@ -76,7 +82,7 @@ class UserReport {
 
   @override
   String toString() {
-    return 'UserReport(id: $id, userId: $userId, dateTime: $dateTime, name: $name, email: $email, phone: $phone, className: $className, report: $report)';
+    return 'UserReport(id: $id, userId: $userId, dateTime: $dateTime, name: $name, email: $email, phone: $phone, className: $className, report: $report, status: $status)';
   }
 
   @override
@@ -90,7 +96,8 @@ class UserReport {
         other.email == email &&
         other.phone == phone &&
         other.className == className &&
-        other.report == report;
+        other.report == report &&
+        other.status == status;
   }
 
   @override
@@ -102,6 +109,7 @@ class UserReport {
         email.hashCode ^
         phone.hashCode ^
         className.hashCode ^
-        report.hashCode;
+        report.hashCode ^
+        status.hashCode;
   }
 }

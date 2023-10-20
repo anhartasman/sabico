@@ -3,17 +3,33 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sabico/architectures/domain/entities/ReportFilter.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
 import 'package:sabico/helpers/extensions/ext_string.dart';
+import 'package:sabico/services/auth_service.dart';
 
 class ReportRemoteDataSource {
-  static Future<List<UserReport>> reportList() async {
+  static Future<List<UserReport>> reportList(ReportFilter theFilter) async {
     List<UserReport> reportList = [];
-    final QuerySnapshot<Map<String, dynamic>> result =
-        await FirebaseFirestore.instance.collection('report').get();
+    final authService = Get.find<AuthService>();
+    CollectionReference col = FirebaseFirestore.instance.collection('report');
+    Query nameQuery = col.where(
+      "status",
+      isEqualTo: theFilter.status,
+    );
+    if (!authService.isAdmin) {
+      debugPrint("Cari berdasarkan userId " + authService.theUser!.id);
+      nameQuery = nameQuery.where(
+        "userId",
+        isEqualTo: authService.theUser!.id,
+      );
+    }
+
+    final QuerySnapshot result = await nameQuery.get();
 
     result.docs.forEach((element) async {
-      final theData = element.data();
+      var theData = element.data() as Map<String, dynamic>;
       debugPrint("Parsing: " + jsonEncode(theData));
 
       String report = theData["report"];
@@ -24,6 +40,7 @@ class ReportRemoteDataSource {
         name: theData["name"],
         email: theData["email"],
         phone: theData["phone"],
+        status: theData["status"],
         className: theData["className"],
         report: report.replaceAll("\\n", "\n"),
       ));
