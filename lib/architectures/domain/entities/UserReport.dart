@@ -6,6 +6,7 @@ class UserReport {
   final String userId;
   final DateTime dateTime;
   final String name;
+  final String doneNote;
   final String email;
   final String phone;
   final String className;
@@ -16,6 +17,7 @@ class UserReport {
     required this.userId,
     required this.dateTime,
     required this.name,
+    required this.doneNote,
     required this.email,
     required this.phone,
     required this.className,
@@ -28,6 +30,7 @@ class UserReport {
     String? userId,
     DateTime? dateTime,
     String? name,
+    String? doneNote,
     String? email,
     String? phone,
     String? className,
@@ -39,6 +42,7 @@ class UserReport {
       userId: userId ?? this.userId,
       dateTime: dateTime ?? this.dateTime,
       name: name ?? this.name,
+      doneNote: doneNote ?? this.doneNote,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       className: className ?? this.className,
@@ -53,6 +57,7 @@ class UserReport {
       'userId': userId,
       'dateTime': dateTime.millisecondsSinceEpoch,
       'name': name,
+      'doneNote': doneNote,
       'email': email,
       'phone': phone,
       'className': className,
@@ -67,6 +72,7 @@ class UserReport {
       userId: map['userId'] as String,
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
       name: map['name'] as String,
+      doneNote: map['doneNote'] as String,
       email: map['email'] as String,
       phone: map['phone'] as String,
       className: map['className'] as String,
@@ -82,7 +88,7 @@ class UserReport {
 
   @override
   String toString() {
-    return 'UserReport(id: $id, userId: $userId, dateTime: $dateTime, name: $name, email: $email, phone: $phone, className: $className, report: $report, status: $status)';
+    return 'UserReport(id: $id, userId: $userId, dateTime: $dateTime, name: $name, doneNote: $doneNote, email: $email, phone: $phone, className: $className, report: $report, status: $status)';
   }
 
   @override
@@ -93,6 +99,7 @@ class UserReport {
         other.userId == userId &&
         other.dateTime == dateTime &&
         other.name == name &&
+        other.doneNote == doneNote &&
         other.email == email &&
         other.phone == phone &&
         other.className == className &&
@@ -106,6 +113,7 @@ class UserReport {
         userId.hashCode ^
         dateTime.hashCode ^
         name.hashCode ^
+        doneNote.hashCode ^
         email.hashCode ^
         phone.hashCode ^
         className.hashCode ^

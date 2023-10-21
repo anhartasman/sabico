@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sabico/architectures/domain/entities/ReportChanges.dart';
 import 'package:sabico/architectures/domain/entities/ReportFilter.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
 import 'package:sabico/helpers/extensions/ext_string.dart';
@@ -39,6 +40,7 @@ class ReportRemoteDataSource {
         userId: theData["userId"],
         name: theData["name"],
         email: theData["email"],
+        doneNote: theData["doneNote"] ?? "",
         phone: theData["phone"],
         status: theData["status"],
         className: theData["className"],
@@ -59,5 +61,22 @@ class ReportRemoteDataSource {
 
     DocumentReference ref =
         await databaseReference.collection('report').add(reportMap);
+  }
+
+  static Future<void> processReport(ReportChanges reportChange) async {
+    final databaseReference = FirebaseFirestore.instance;
+
+    var changeData = {
+      "status": reportChange.statusChange,
+      (reportChange.statusChange == "active" ? "dateActive" : "dateDone"):
+          DateTime.now().toTanggal("yyyy-mm-dd HH:mm:ss"),
+    };
+    if (reportChange.statusChange == "done") {
+      changeData["doneNote"] = reportChange.noteChange;
+    }
+    await databaseReference
+        .collection('report')
+        .doc(reportChange.reportId)
+        .update(changeData);
   }
 }

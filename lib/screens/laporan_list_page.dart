@@ -70,7 +70,12 @@ class laporan_list_page extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final theReport = state.reportList[index];
                   return InkWell(
-                    onTap: () => Get.to(detail_laporan(theReport)),
+                    onTap: () =>
+                        Get.to(detail_laporan(theReport))?.then((value) {
+                      if (value == true) {
+                        Get.back();
+                      }
+                    }),
                     child: report_item(theReport),
                   );
                 },

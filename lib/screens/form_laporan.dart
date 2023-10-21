@@ -36,6 +36,7 @@ class _form_laporanState extends State<form_laporan> {
           id: "",
           dateTime: DateTime.now(),
           userId: "",
+          doneNote: "",
           status: "waiting",
           name: _etName.text,
           email: _etEmail.text,
