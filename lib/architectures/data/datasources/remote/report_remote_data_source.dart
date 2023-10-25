@@ -56,7 +56,7 @@ class ReportRemoteDataSource {
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
     Map<String, dynamic> reportMap = theReport.toMap();
-    reportMap["dateTime"] = theReport.dateTime.toTanggal("yyyy-mm-dd");
+    reportMap["dateTime"] = theReport.dateTime.toTanggal("yyyy-MM-dd");
     reportMap["userId"] = _auth.currentUser!.uid;
 
     DocumentReference ref =
