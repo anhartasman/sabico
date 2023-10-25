@@ -69,7 +69,7 @@ class ReportRemoteDataSource {
     var changeData = {
       "status": reportChange.statusChange,
       (reportChange.statusChange == "active" ? "dateActive" : "dateDone"):
-          DateTime.now().toTanggal("yyyy-mm-dd HH:mm:ss"),
+          DateTime.now().toTanggal("yyyy-MM-dd HH:mm:ss"),
     };
     if (reportChange.statusChange == "done") {
       changeData["doneNote"] = reportChange.noteChange;
