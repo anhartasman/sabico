@@ -5,17 +5,12 @@ import 'package:sabico/architectures/data/repositories/DataReportRepository.dart
 import 'package:sabico/architectures/domain/repositories/AuthRepository.dart';
 import 'package:sabico/architectures/domain/repositories/MemberRepository.dart';
 import 'package:sabico/architectures/domain/repositories/ReportRepository.dart';
-import 'package:sabico/architectures/domain/usecases/FamilyEvaluationSaveUseCase.dart';
-import 'package:sabico/architectures/domain/usecases/FamilyMemberDetailUseCase.dart';
-import 'package:sabico/architectures/domain/usecases/FamilyMemberSaveUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/MemberInfoUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/SaveReportUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/ProcessReportUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/UserLoginUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/UserRegisterUseCase.dart';
 import 'package:sabico/architectures/domain/usecases/UserReportListUseCase.dart';
-import 'package:sabico/bloc/family_evaluation_history/family_evaluation_history_bloc.dart';
-import 'package:sabico/bloc/family_evaluation_save/family_evaluation_save_bloc.dart';
 import 'package:sabico/bloc/member_info/member_info_bloc.dart';
 import 'package:sabico/bloc/process_report/process_report_bloc.dart';
 import 'package:sabico/bloc/save_report/save_report_bloc.dart';
@@ -29,9 +24,6 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => UserReportListUseCase(sl()));
-  sl.registerLazySingleton(() => FamilyMemberSaveUseCase(sl()));
-  sl.registerLazySingleton(() => FamilyMemberDetailUseCase(sl()));
-  sl.registerLazySingleton(() => FamilyEvaluationSaveUseCase(sl()));
   sl.registerLazySingleton(() => ProcessReportUseCase(sl()));
   sl.registerLazySingleton(() => UserLoginUseCase(sl()));
   sl.registerLazySingleton(() => UserRegisterUseCase(sl()));
@@ -75,11 +67,6 @@ Future<void> init() async {
   sl.registerFactory(
     () => ProcessReportBloc(
       processReportUseCase: sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => FamilyEvaluationHistoryBloc(
-      familyEvaluationHistoryUseCase: sl(),
     ),
   );
   sl.registerFactory(

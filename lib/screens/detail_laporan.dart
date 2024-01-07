@@ -4,17 +4,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sabico/architectures/domain/entities/UserReport.dart';
 import 'package:sabico/bloc/member_info/bloc.dart';
 import 'package:sabico/bloc/process_report/bloc.dart';
-import 'package:sabico/dates_list.dart';
 import 'package:sabico/helpers/extensions/ext_string.dart';
-import 'package:sabico/theme/colors/Warna.dart';
+import 'package:sabico/injection_container.dart' as di;
 import 'package:sabico/theme/colors/light_colors.dart';
 import 'package:sabico/widgets/ReportStatusChanger.dart';
-import 'package:sabico/widgets/calendar_dates.dart';
-import 'package:sabico/widgets/task_container.dart';
-import 'package:sabico/screens/create_new_task_page.dart';
 import 'package:sabico/widgets/back_button.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:sabico/injection_container.dart' as di;
 
 class detail_laporan extends StatelessWidget {
   final UserReport theReport;
