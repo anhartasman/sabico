@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sabico/bloc/splash_check/bloc.dart';
 import 'package:sabico/screens/models/IzinAplikasi.dart';
 import 'package:sabico/widgets/ButtonMain.dart';
 import 'package:sabico/widgets/ButtonPutih.dart';
@@ -14,10 +16,8 @@ import 'package:sabico/widgets/SplashContent.dart';
 import 'package:sabico/widgets/TampilanDialog.dart';
 
 class SplashCheckPermission extends StatefulWidget {
-  final Function onSuccess;
   const SplashCheckPermission({
     Key? key,
-    required this.onSuccess,
   }) : super(key: key);
   @override
   _SplashCheckPermissionState createState() => _SplashCheckPermissionState();
@@ -73,8 +73,9 @@ class _SplashCheckPermissionState extends State<SplashCheckPermission> {
     if (kIsWeb) {
       // running on the web!
 
-      Future.delayed(Duration(milliseconds: 500))
-          .then((value) => widget.onSuccess());
+      Future.delayed(Duration(milliseconds: 500)).then((value) =>
+          BlocProvider.of<SplashCheckBloc>(context)
+              .add(SplashCheckBlocSuccessPermission()));
       return;
     }
     permissionIdx = 0;
@@ -98,8 +99,9 @@ class _SplashCheckPermissionState extends State<SplashCheckPermission> {
         await Future.delayed(Duration(milliseconds: 100), () {});
       }
 
-      Future.delayed(Duration(milliseconds: 500))
-          .then((value) => widget.onSuccess());
+      Future.delayed(Duration(milliseconds: 500)).then((value) =>
+          BlocProvider.of<SplashCheckBloc>(context)
+              .add(SplashCheckBlocSuccessPermission()));
     } catch (error) {
       final errorMsg = error.toString();
       final permissionName =

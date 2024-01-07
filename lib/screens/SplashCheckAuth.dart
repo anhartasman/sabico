@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:sabico/architectures/domain/entities/UserAccount.dart';
 import 'package:sabico/architectures/domain/entities/UserProfile.dart';
+import 'package:sabico/bloc/splash_check/bloc.dart';
 import 'package:sabico/screens/splash_ui.dart';
 import 'package:sabico/services/auth_service.dart';
 
 class SplashCheckAuth extends StatefulWidget {
-  final Function onSuccess;
   const SplashCheckAuth({
     Key? key,
-    required this.onSuccess,
   }) : super(key: key);
   @override
   _SplashCheckAuthState createState() => _SplashCheckAuthState();
@@ -51,7 +51,7 @@ class _SplashCheckAuthState extends State<SplashCheckAuth> {
         ),
       );
     }
-    widget.onSuccess();
+    BlocProvider.of<SplashCheckBloc>(context).add(SplashCheckBlocSuccessAuth());
   }
 
   @override

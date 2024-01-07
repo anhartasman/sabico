@@ -19,6 +19,7 @@ import 'package:sabico/bloc/family_evaluation_save/family_evaluation_save_bloc.d
 import 'package:sabico/bloc/member_info/member_info_bloc.dart';
 import 'package:sabico/bloc/process_report/process_report_bloc.dart';
 import 'package:sabico/bloc/save_report/save_report_bloc.dart';
+import 'package:sabico/bloc/splash_check/splash_check_bloc.dart';
 import 'package:sabico/bloc/user_login/user_login_bloc.dart';
 import 'package:sabico/bloc/user_register/user_register_bloc.dart';
 import 'package:sabico/bloc/user_report_list/bloc.dart';
@@ -80,5 +81,8 @@ Future<void> init() async {
     () => FamilyEvaluationHistoryBloc(
       familyEvaluationHistoryUseCase: sl(),
     ),
+  );
+  sl.registerFactory(
+    () => SplashCheckBloc(),
   );
 }
